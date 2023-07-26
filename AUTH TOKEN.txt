@@ -1,0 +1,6 @@
+C36DE09079464F7085BC4C0122B81887 
+
+https://xmlfeed.directemployers.org/
+
+?authtoken=C36DE09079464F7085BC4C0122B81887
+https://xmlfeed.directemployers.org/feeds/1800Accountant.xml?authtoken=C36DE09079464F7085BC4C0122B81887
