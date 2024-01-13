@@ -47,6 +47,9 @@ class XMLFEED:
                 if os.path.getsize(str(self.TODAY) + "\\DATA\\" + x[1]) == 0:
                     #print(x[1])
                     NEWMAN.append(['/feeds/'+x[1], x[1]])
+                else:
+                    if "500 - Internal server error" in read(str(self.TODAY) + "\\DATA\\" + x[1]):
+                        NEWMAN.append(['/feeds/'+x[1], x[1]])
             else:
                 NEWMAN.append(['/feeds/'+x[1], x[1]])
         self.MANIFEST = NEWMAN
@@ -87,7 +90,7 @@ class XMLFEED:
 
     def Threader(self):
         self.Q = Queue()
-        for x in range(100):
+        for x in range(130):
             l = threading.Thread(target=self.downloadMANIFEST)
             #l.daemon = True
             self.THREADS.append(l)
@@ -109,9 +112,11 @@ class XMLFEED:
             __TEMP__ = self.Q.get()
             if __TEMP__ == None:
                 break
-            print(__TEMP__[1])
+            
             with open(str(self.TODAY) + "\\DATA\\" + __TEMP__[1] + "", "wb") as f:
                 __QQ = requests.get(self.URL + __TEMP__[0] + self.AUTHTOKEN)
+                print(__TEMP__[1])
+                print(__QQ.status_code)
                 for chunk in __QQ.iter_content(chunk_size=8192): 
                     f.write(chunk)
             self.Q.task_done()
